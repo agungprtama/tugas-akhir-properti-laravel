@@ -1,8 +1,11 @@
 <?php
 
+use App\Http\Controllers\API\ArtikelController;
+use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\PropertyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\AuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +26,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('user', [AuthController::class, 'updateProfile']);
     Route::post('user/photo', [AuthController::class, 'updatePhoto']);
     Route::post('logout', [AuthController::class, 'logout']);
+
+    Route::apiResource('properties', PropertyController::class);
+    Route::get('user/properties', [PropertyController::class, 'userProperties']);
+
 });
+
+Route::get('artikel', [ArtikelController::class, 'index']);
+Route::get('/artikel/{id}', [ArtikelController::class, 'show']);
+
