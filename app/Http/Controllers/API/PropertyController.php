@@ -66,7 +66,9 @@ class PropertyController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        return response()->json($property, 201);
+        // return response()->json($property, 201);
+        return ResponseFormatter::success($property, 'Berhasil mendapatkan data property');
+
     }
 
     public function show($id)
