@@ -54,7 +54,7 @@ class PropertyController extends Controller
 
         // Mengunggah gambar jika ada
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('images', 'public');
+            $imagePath = $request->file('image')->store('property', 'public');
         } else {
             $imagePath = null;
         }
@@ -85,6 +85,7 @@ class PropertyController extends Controller
     public function update(Request $request, $id)
     {
         // Validasi input
+        // dd($request->all());
         $request->validate([
             'offer_type' => 'required|in:jual,sewa',
             'property_type' => 'required|in:rumah,apartement,tanah',
