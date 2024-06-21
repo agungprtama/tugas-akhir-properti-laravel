@@ -63,50 +63,50 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        try {
-
-            // $request->validate([
-            //     'name' => ['required', 'string', 'max:255'],
-            //     'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            //     'password' => $this->passwordRules()
-            // ]);
-            // logger('Entering register method');
-
-            $validator = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'max:255'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => $this->passwordRules()
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json($validator->errors(), 400);
-            }
-
-            User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'phone' => $request->phone,
-            ]);
-
-
-            $user = User::where('email', $request->email)->first();
-
-            $tokenResult = $user->createToken('authToken')->plainTextToken;
-
-            return ResponseFormatter::success([
-                'access_token' => $tokenResult,
-                'token_type' => 'Bearer',
-                'user' => $user
-            ], 'User Registered');
-        } catch (Exception $error) {
-            logger($error->getMessage());
-            return ResponseFormatter::error([
-                'message' => 'Something went wrong',
-                'error' => $error->getMessage(),
-            ], 'Authentication Failed', 500);
+    try {
+        // Periksa apakah email sudah ada di database
+        $existingUser = User::where('email', $request->email)->first();
+        if ($existingUser) {
+            return response()->json([
+                'message' => 'Email already exists'
+            ], 400);
         }
+
+        // Lakukan validasi
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => $this->passwordRules()
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        // Buat pengguna baru
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'phone' => $request->phone,
+        ]);
+
+        // Buat token autentikasi
+        $tokenResult = $user->createToken('authToken')->plainTextToken;
+
+        return ResponseFormatter::success([
+            'access_token' => $tokenResult,
+            'token_type' => 'Bearer',
+            'user' => $user
+        ], 'User Registered');
+    } catch (Exception $error) {
+        logger($error->getMessage());
+        return ResponseFormatter::error([
+            'message' => 'Something went wrong',
+            'error' => $error->getMessage(),
+        ], 'Authentication Failed', 500);
     }
+}
 
     public function logout(Request $request)
     {
