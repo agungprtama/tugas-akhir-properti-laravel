@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\KprController;
+use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +31,10 @@ use App\Http\Controllers\Admin\PageController;
 Route::get('/', function () {
     return redirect('/admin');
 });
+
+// routes/web.php
+Route::post('/kpr/simulation', [KprController::class, 'simulate'])->name('kpr.simulation');
+Route::get('/kpr/form', function () {
+    return view('kpr.form');
+})->name('kpr.form');
+

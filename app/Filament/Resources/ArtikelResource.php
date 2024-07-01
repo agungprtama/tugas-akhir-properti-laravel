@@ -52,6 +52,12 @@ class ArtikelResource extends Resource
                 TextColumn::make('link')
                 ->label('Link')
                 ->url(fn ($record) => $record->link, true),
+                TextColumn::make('description')
+                ->label('Deskripsi')
+                ->limit(50)
+                ->tooltip(function ($record) {
+                    return $record->description; // Menampilkan tooltip dengan seluruh teks
+                }),
                 ImageColumn::make('image')
                 ->label('Gambar'),
             ])
