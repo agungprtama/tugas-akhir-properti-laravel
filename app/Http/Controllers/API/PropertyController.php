@@ -82,10 +82,9 @@ class PropertyController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function updateWithPost(Request $request, $id)
     {
         // Validasi input
-        // dd($request->all());
         $request->validate([
             'offer_type' => 'required|in:jual,sewa',
             'property_type' => 'required|in:rumah,apartement,tanah',
@@ -108,6 +107,12 @@ class PropertyController extends Controller
 
         $property = Property::findOrFail($id);
 
+        // Pastikan user_id dari properti sesuai dengan id pengguna yang sedang terautentikasi
+        if ($property->user_id !== Auth::id()) {
+            // return response()->json(['error' => 'Forbidden'], 403);
+            return ResponseFormatter::error(null, "Forbidden", 403);
+        }
+
         // Mengunggah gambar jika ada
         if ($request->hasFile('image')) {
             // Hapus gambar lama jika ada
@@ -126,22 +131,34 @@ class PropertyController extends Controller
             'image' => $imagePath,
         ]);
 
-        return response()->json($property, 200);
+        // return response()->json($property, 200);
+        return ResponseFormatter::success($property, 'Berhasil mendapatkan data property');
     }
+
+
 
     public function destroy($id)
     {
-        
-
         try {
             $property = Property::findOrFail($id);
+    
+            // Pastikan user_id dari properti sesuai dengan id pengguna yang sedang terautentikasi
+            if ($property->user_id !== Auth::id()) {
+                return response()->json(['error' => 'Forbidden'], 403);
+            }
+    
+            // Hapus gambar dari storage jika ada
+            if ($property->image) {
+                Storage::disk('public')->delete($property->image);
+            }
+    
             $property->delete();
-            // return response()->json(null, 204);
-            return ResponseFormatter::success(null, 'Berhasil menghapus data property', 204);
+            return response()->json(['message' => 'Berhasil menghapus data property'], 204);
         } catch (ModelNotFoundException $e) {
-            return ResponseFormatter::error(null, "Tidak ada data property yang ditemukan", 404);
+            return response()->json(['error' => 'Tidak ada data property yang ditemukan'], 404);
         }
     }
+    
 
     public function userProperties()
     {

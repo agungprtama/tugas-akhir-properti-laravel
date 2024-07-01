@@ -28,6 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout', [AuthController::class, 'logout']);
 
     Route::apiResource('properties', PropertyController::class);
+    Route::post('properties/update/{id}', [PropertyController::class, 'updateWithPost']);
+
     Route::get('user/properties', [PropertyController::class, 'userProperties']);
 
 });
