@@ -22,6 +22,31 @@ class KprController extends Controller
     //     return view('kpr.simulation_result', compact('monthlyPayment', 'loanAmount', 'interestRate', 'loanTerm', 'price', 'downPayment'));
     // }
 
+    // public function simulate(Request $request)
+    // {
+    //     // Ambil input dari formulir
+    //     $price = $request->input('price');
+    //     $downPayment = $request->input('down_payment');
+    //     $interestRate = $request->input('interest_rate');
+    //     $loanTerm = $request->input('loan_term');
+
+    //     // Hitung jumlah pinjaman
+    //     $loanAmount = $price - $downPayment;
+
+    //     // Hitung suku bunga bulanan
+    //     $monthlyInterestRate = ($interestRate / 100) / 12;
+
+    //     // Hitung jumlah total pembayaran dalam bulan
+    //     $numberOfPayments = $loanTerm * 12;
+
+    //     // Hitung angsuran bulanan
+    //     $monthlyPayment = $loanAmount * $monthlyInterestRate * pow((1 + $monthlyInterestRate), $numberOfPayments) / (pow((1 + $monthlyInterestRate), $numberOfPayments) - 1);
+
+    //     // Kembalikan hasil ke view
+    //     return view('kpr.simulation_result', compact('monthlyPayment', 'loanAmount', 'interestRate', 'loanTerm', 'price', 'downPayment'));
+    // }
+
+
     public function simulate(Request $request)
     {
         // Ambil input dari formulir
@@ -33,13 +58,13 @@ class KprController extends Controller
         // Hitung jumlah pinjaman
         $loanAmount = $price - $downPayment;
 
-        // Hitung suku bunga bulanan
+        // Konversi suku bunga tahunan ke desimal dan hitung suku bunga bulanan
         $monthlyInterestRate = ($interestRate / 100) / 12;
 
         // Hitung jumlah total pembayaran dalam bulan
         $numberOfPayments = $loanTerm * 12;
 
-        // Hitung angsuran bulanan
+        // Hitung angsuran bulanan menggunakan rumus anuitas
         $monthlyPayment = $loanAmount * $monthlyInterestRate * pow((1 + $monthlyInterestRate), $numberOfPayments) / (pow((1 + $monthlyInterestRate), $numberOfPayments) - 1);
 
         // Kembalikan hasil ke view

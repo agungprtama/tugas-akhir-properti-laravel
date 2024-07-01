@@ -12,7 +12,7 @@
         <p>Harga Properti: Rp {{ number_format($price, 0, ',', '.') }}</p>
         <p>Uang Muka (DP): Rp {{ number_format($downPayment, 0, ',', '.') }}</p>
         <p>Jumlah Pinjaman: Rp {{ number_format($loanAmount, 0, ',', '.') }}</p>
-        <p>Suku Bunga: {{ $interestRate * 100 }}% per tahun</p>
+        <p>Suku Bunga: {{ $interestRate }}% per tahun</p>
         <p>Jangka Waktu Kredit: {{ $loanTerm }} tahun</p>
         <h2>Angsuran Bulanan: Rp {{ number_format($monthlyPayment, 0, ',', '.') }}</h2>
     </div>
