@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\ArtikelController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\KprSimulateController;
 use App\Http\Controllers\API\PropertyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,11 +30,15 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('properties/update/{id}', [PropertyController::class, 'updateWithPost']);
 
-    Route::get('user/properties', [PropertyController::class, 'userProperties']);
 
 });
 Route::apiResource('properties', PropertyController::class);
 
 Route::get('artikel', [ArtikelController::class, 'index']);
 Route::get('/artikel/{id}', [ArtikelController::class, 'show']);
+
+Route::post('simulate', [KprSimulateController::class, 'simulate']);
+
+Route::get('user/properties', [PropertyController::class, 'userProperties']);
+
 

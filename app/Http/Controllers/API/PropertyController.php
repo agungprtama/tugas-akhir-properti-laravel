@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\Property;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -160,14 +161,27 @@ class PropertyController extends Controller
     }
     
 
-    public function userProperties()
+    public function userProperties(Request $request)
     {
-        $user = Auth::user();
+        // Validasi input
+        // $validated = $request->validate([
+        //     'user_id' => 'required|exists:users,id',
+        // ]);
+
+        // Ambil id user dari request
+        $userId = $request->user_id;
+
+        // Dapatkan data user berdasarkan id
+        $user = User::find($userId);
+
+        // Jika user tidak ditemukan, kembalikan error
         if (!$user) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'User not found'], 404);
         }
 
+        // Ambil properti yang dimiliki oleh user
         $properties = $user->properties;
+
         return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
     }
 }
