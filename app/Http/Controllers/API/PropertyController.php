@@ -161,27 +161,38 @@ class PropertyController extends Controller
     }
     
 
-    public function userProperties(Request $request)
+    // public function userProperties(Request $request)
+    // {
+    //     // Validasi input
+    //     // $validated = $request->validate([
+    //     //     'user_id' => 'required|exists:users,id',
+    //     // ]);
+
+    //     // Ambil id user dari request
+    //     $userId = $request->user_id;
+
+    //     // Dapatkan data user berdasarkan id
+    //     $user = User::find($userId);
+
+    //     // Jika user tidak ditemukan, kembalikan error
+    //     if (!$user) {
+    //         return response()->json(['error' => 'User not found'], 404);
+    //     }
+
+    //     // Ambil properti yang dimiliki oleh user
+    //     $properties = $user->properties;
+
+    //     return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
+    // }
+
+    public function userProperties()
     {
-        // Validasi input
-        // $validated = $request->validate([
-        //     'user_id' => 'required|exists:users,id',
-        // ]);
-
-        // Ambil id user dari request
-        $userId = $request->user_id;
-
-        // Dapatkan data user berdasarkan id
-        $user = User::find($userId);
-
-        // Jika user tidak ditemukan, kembalikan error
+        $user = Auth::user();
         if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        // Ambil properti yang dimiliki oleh user
         $properties = $user->properties;
-
         return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
     }
 }
