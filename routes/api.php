@@ -30,9 +30,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('properties/update/{id}', [PropertyController::class, 'updateWithPost']);
 
+    Route::apiResource('properties', PropertyController::class);
 
 });
-Route::apiResource('properties', PropertyController::class);
 
 Route::get('artikel', [ArtikelController::class, 'index']);
 Route::get('/artikel/{id}', [ArtikelController::class, 'show']);
