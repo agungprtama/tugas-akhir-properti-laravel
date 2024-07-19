@@ -30,7 +30,9 @@ class Property extends Model
         'gmaps_link',
         'image',
         'other_links',
-        'user_id',  // tambahkan user_id
+        'user_id',
+        'latitude',
+        'longitude',
     ];
 
     public function user()

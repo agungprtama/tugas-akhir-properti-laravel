@@ -128,6 +128,10 @@ class PropertyResource extends Resource
                 ->label('Link Google Maps'),
                 TextInput::make('other_links')
                 ->label('Link Lainnya'),
+                TextInput::make('latitude')
+                ->label('Latitude'),
+                TextInput::make('longitude')
+                ->label('Longitude'),
             ]);
     }
 
@@ -221,10 +225,17 @@ class PropertyResource extends Resource
         TextColumn::make('gmaps_link')
             ->label('Link Google Maps')
             ->url(fn ($record) => $record->gmaps_link, true),
+
+        TextColumn::make('latitude')
+            ->label('Latitude'),
+        TextColumn::make('longitude')
+            ->label('Longitude'),
+        
         
         TextColumn::make('other_links')
             ->label('Link Lainnya')
             ->url(fn ($record) => $record->other_links, true),
+        
             ])
             ->filters([
                 //

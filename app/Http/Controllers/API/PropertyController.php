@@ -30,6 +30,22 @@ class PropertyController extends Controller
 
     }
 
+    public function showUser(Request $request)
+    {
+        $userId = $request->user_id;
+    
+    // Query untuk mendapatkan properti berdasarkan offer_type dan user_id jika disediakan
+        $query = Property::with('user');
+        
+        if ($userId) {
+            $query->where('user_id', $userId);
+        }
+        
+        $properties = $query->get();
+
+        return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
+    }
+
     public function store(Request $request)
     {
         // Validasi input
@@ -50,7 +66,9 @@ class PropertyController extends Controller
             'address' => 'required|string',
             'image' => 'nullable|image|max:2048', // validasi untuk gambar
             'gmaps_link' => 'nullable|url',
-            'other_links' => 'nullable|url'
+            'other_links' => 'nullable|url',
+            'latitude' => 'required|string',
+            'longitude' => 'required|string'
         ]);
 
         // Mengunggah gambar jika ada
@@ -103,7 +121,9 @@ class PropertyController extends Controller
             'address' => 'required|string',
             'image' => 'nullable|image|max:2048', // validasi untuk gambar
             'gmaps_link' => 'nullable|url',
-            'other_links' => 'nullable|url'
+            'other_links' => 'nullable|url',
+            'latitude' => 'required|string',
+            'longitude' => 'required|string'
         ]);
 
         $property = Property::findOrFail($id);
