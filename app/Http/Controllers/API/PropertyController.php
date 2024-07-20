@@ -30,18 +30,26 @@ class PropertyController extends Controller
 
     }
 
+    // public function showUser(Request $request)
+    // {
+    //     $userId = $request->user_id;
+    
+    // // Query untuk mendapatkan properti berdasarkan offer_type dan user_id jika disediakan
+    //     $query = Property::with('user');
+        
+    //     if ($userId) {
+    //         $query->where('user_id', $userId);
+    //     }
+        
+    //     $properties = $query->get();
+
+    //     return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
+    // }
+
     public function showUser(Request $request)
     {
-        $userId = $request->user_id;
-    
-    // Query untuk mendapatkan properti berdasarkan offer_type dan user_id jika disediakan
-        $query = Property::with('user');
-        
-        if ($userId) {
-            $query->where('user_id', $userId);
-        }
-        
-        $properties = $query->get();
+        // Mengambil semua properti dengan relasi user
+        $properties = Property::with('user')->get();
 
         return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
     }

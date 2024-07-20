@@ -44,7 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::get('properties', [PropertyController::class, 'index']);
-Route::get('property/{user_id}', [PropertyController::class, 'showUser']);
+Route::get('property-show-user', [PropertyController::class, 'showUser']);
 
 Route::get('artikel', [ArtikelController::class, 'index']);
 Route::get('/artikel/{id}', [ArtikelController::class, 'show']);
