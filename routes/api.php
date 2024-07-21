@@ -33,7 +33,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Route::apiResource('properties', PropertyController::class);
 
     Route::post('properties', [PropertyController::class, 'store']);
-    Route::get('properties/{property}', [PropertyController::class, 'show']);
     Route::put('properties/{property}', [PropertyController::class, 'updateWithPost']);
     Route::patch('properties/{property}', [PropertyController::class, 'updateWithPost']);
     Route::delete('properties/{property}', [PropertyController::class, 'destroy']);
@@ -42,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 });
+Route::get('properties/{property}', [PropertyController::class, 'show']);
 
 Route::get('properties', [PropertyController::class, 'index']);
 Route::get('property-show-user', [PropertyController::class, 'showUser']);
