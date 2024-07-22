@@ -101,7 +101,7 @@ class PropertyController extends Controller
     public function show($id)
     {
         try {
-            $property = Property::findOrFail($id)->with('user')->get();
+            $property = Property::with('user')->findOrFail($id);
             // return response()->json($property);
             return ResponseFormatter::success($property, 'Berhasil mendapatkan data property');
         } catch (ModelNotFoundException $e) {
