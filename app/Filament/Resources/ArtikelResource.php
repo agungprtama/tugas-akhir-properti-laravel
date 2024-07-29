@@ -7,6 +7,7 @@ use App\Filament\Resources\ArtikelResource\RelationManagers;
 use App\Models\Artikel;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -28,18 +29,18 @@ class ArtikelResource extends Resource
         return $form
             ->schema([
                 TextInput::make('title')
-                ->label('Judul')
-                ->required(),
-                TextInput::make('description')
-                ->label('Deskripsi')
-                ->required(),
+                    ->label('Judul')
+                    ->required(),
+                Textarea::make('description')
+                    ->label('Deskripsi')
+                    ->required(),
                 TextInput::make('link')
-                ->label('Link'),
+                    ->label('Link'),
                 FileUpload::make('image')
-                ->label('Upload Gambar')
-                ->disk('public')
-                ->directory('artikel')
-                ->required(),
+                    ->label('Upload Gambar')
+                    ->disk('public')
+                    ->directory('artikel')
+                    ->required(),
             ]);
     }
 
@@ -48,18 +49,18 @@ class ArtikelResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('title')
-                ->label('Judul'),
+                    ->label('Judul'),
                 TextColumn::make('link')
-                ->label('Link')
-                ->url(fn ($record) => $record->link, true),
+                    ->label('Link')
+                    ->url(fn ($record) => $record->link, true),
                 TextColumn::make('description')
-                ->label('Deskripsi')
-                ->limit(50)
-                ->tooltip(function ($record) {
-                    return $record->description; // Menampilkan tooltip dengan seluruh teks
-                }),
+                    ->label('Deskripsi')
+                    ->limit(50)
+                    ->tooltip(function ($record) {
+                        return $record->description; // Menampilkan tooltip dengan seluruh teks
+                    }),
                 ImageColumn::make('image')
-                ->label('Gambar'),
+                    ->label('Gambar'),
             ])
             ->filters([
                 //

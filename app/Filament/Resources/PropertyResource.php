@@ -33,105 +33,111 @@ class PropertyResource extends Resource
         return $form
             ->schema([
                 Select::make('user_id')
-                ->label('User')
-                ->options(User::all()->pluck('name', 'id'))
-                ->searchable()
-                ->required(),
+                    ->label('User')
+                    ->options(User::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->required(),
                 TextInput::make('name')
-                ->label('Nama Properti')
-                ->required(),
+                    ->label('Nama Properti')
+                    ->required(),
                 Textarea::make('description')
-                ->label('Deskripsi Properti')
-                ->required(),
+                    ->label('Deskripsi Properti')
+                    ->required(),
                 TextInput::make('price')
-                ->label('Harga')
-                ->numeric()
-                ->minValue(0)
-                ->step(0.01)
-                ->required(),
+                    ->label('Harga')
+                    ->numeric()
+                    ->minValue(0)
+                    ->step(0.01)
+                    ->required(),
                 FileUpload::make('image')
-                ->label('Upload Gambar')
-                ->disk('public')
-                ->directory('property')
-                ->required(),
+                    ->label('Upload Gambar')
+                    ->disk('public')
+                    ->directory('property')
+                    ->required(),
                 Select::make('offer_type')
-                ->label('Tipe Penawaran')
-                ->options([
-                    'jual' => 'Jual',
-                    'sewa' => 'Sewa',
-                ])
-                ->required(),
+                    ->label('Tipe Penawaran')
+                    ->options([
+                        'jual' => 'Jual',
+                        'sewa' => 'Sewa',
+                    ])
+                    ->required(),
                 DatePicker::make('rental_start_date')
-                ->label('Tanggal Mulai Sewa')
-                ->nullable(),
+                    ->label('Tanggal Mulai Sewa')
+                    ->nullable(),
                 DatePicker::make('rental_end_date')
-                ->label('Tanggal Selesai Sewa')
-                ->nullable(),
+                    ->label('Tanggal Selesai Sewa')
+                    ->nullable(),
                 Select::make('property_type')
-                ->label('Tipe Properti')
-                ->options([
-                    'rumah' => 'Rumah',
-                    'apartement' => 'Apartement',
-                    'tanah' => 'Tanah',
-                ])
-                ->required(),
+                    ->label('Tipe Properti')
+                    ->options([
+                        'rumah' => 'Rumah',
+                        'apartement' => 'Apartement',
+                        'tanah' => 'Tanah',
+                    ])
+                    ->required(),
                 Select::make('furnished')
-                ->label('Full Furnish')
-                ->options([
-                    'ya' => 'Iya',
-                    'tidak' => 'Tidak',
-                    'semi' => 'Semi',
-                ])
-                ->required(),
+                    ->label('Full Furnish')
+                    ->options([
+                        'ya' => 'Iya',
+                        'tidak' => 'Tidak',
+                        'semi' => 'Semi',
+                    ])
+                    ->required(),
+                TextInput::make('jumlah_lantai')
+                    ->label('Jumlah lantai')
+                    ->numeric()
+                    ->minValue(0)
+                    ->step(1)
+                    ->required(),
                 TextInput::make('bedrooms')
-                ->label('Kamar Tidur')
-                ->numeric()
-                ->minValue(0)
-                ->step(1)
-                ->required(),
+                    ->label('Kamar Tidur')
+                    ->numeric()
+                    ->minValue(0)
+                    ->step(1)
+                    ->required(),
                 TextInput::make('bathrooms')
-                ->label('Kamar Mandi')
-                ->numeric()
-                ->minValue(0)
-                ->step(1)
-                ->required(),
+                    ->label('Kamar Mandi')
+                    ->numeric()
+                    ->minValue(0)
+                    ->step(1)
+                    ->required(),
                 TextInput::make('building_area')
-                ->label('Luas Bangunan')
-                ->numeric()
-                ->minValue(0)
-                ->step(1)
-                ->required(),
+                    ->label('Luas Bangunan')
+                    ->numeric()
+                    ->minValue(0)
+                    ->step(1)
+                    ->required(),
                 TextInput::make('land_area')
-                ->label('Luas Tanah')
-                ->numeric()
-                ->minValue(0)
-                ->step(1)
-                ->required(),
+                    ->label('Luas Tanah')
+                    ->numeric()
+                    ->minValue(0)
+                    ->step(1)
+                    ->required(),
                 TextInput::make('garage')
-                ->label('Garasi')
-                ->numeric()
-                ->minValue(0)
-                ->step(1),
+                    ->label('Garasi')
+                    ->numeric()
+                    ->minValue(0)
+                    ->step(1),
                 TextInput::make('province')
-                ->label('Provinsi')
-                ->required(),
+                    ->label('Provinsi')
+                    ->required(),
                 TextInput::make('city')
-                ->label('Kota')
-                ->required(),
+                    ->label('Kota')
+                    ->required(),
                 TextInput::make('district')
-                ->label('Kelurahan')
-                ->required(),
+                    ->label('Kelurahan')
+                    ->required(),
                 Textarea::make('address')
-                ->label('Alamat Lengkap')
-                ->required(),
+                    ->label('Alamat Lengkap')
+                    ->required(),
                 TextInput::make('gmaps_link')
-                ->label('Link Google Maps'),
+                    ->label('Link Google Maps'),
                 TextInput::make('other_links')
-                ->label('Link Lainnya'),
+                    ->label('Link Lainnya'),
                 TextInput::make('latitude')
-                ->label('Latitude'),
+                    ->label('Latitude'),
                 TextInput::make('longitude')
-                ->label('Longitude'),
+                    ->label('Longitude'),
             ]);
     }
 
@@ -140,102 +146,105 @@ class PropertyResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('user.name')
-            ->label('User')
-            ->searchable(),
-        
-        TextColumn::make('name')
-            ->label('Nama Properti')
-            ->searchable(),
-        
-        TextColumn::make('description')
-            ->label('Deskripsi Properti')
-            ->limit(50),
-        
-        TextColumn::make('price')
-            ->label('Harga')
-            ->money('IDR', true),
-        
-        ImageColumn::make('image')
-            ->label('Gambar'),
-        
-        SelectColumn::make('offer_type')
-            ->label('Tipe Penawaran')
-            ->options([
-                'jual' => 'Jual',
-                'sewa' => 'Sewa',
-            ]),
-        
-        TextColumn::make('rental_start_date')
-            ->label('Tanggal Mulai Sewa')
-            ->dateTime(),
-        
-        TextColumn::make('rental_end_date')
-            ->label('Tanggal Selesai Sewa')
-            ->dateTime(),
-        
-        SelectColumn::make('property_type')
-            ->label('Tipe Properti')
-            ->options([
-                'rumah' => 'Rumah',
-                'apartement' => 'Apartement',
-                'tanah' => 'Tanah',
-            ]),
-        
-        SelectColumn::make('furnished')
-            ->label('Full Furnish')
-            ->options([
-                'ya' => 'Iya',
-                'tidak' => 'Tidak',
-                'semi' => 'Semi',
-            ]),
-        
-        TextColumn::make('bedrooms')
-            ->label('Kamar Tidur')
-            ->numeric(),
-        
-        TextColumn::make('bathrooms')
-            ->label('Kamar Mandi')
-            ->numeric(),
-        
-        TextColumn::make('building_area')
-            ->label('Luas Bangunan')
-            ->numeric(),
-        
-        TextColumn::make('land_area')
-            ->label('Luas Tanah')
-            ->numeric(),
-        
-        TextColumn::make('garage')
-            ->label('Garasi')
-            ->numeric(),
-        
-        TextColumn::make('province')
-            ->label('Provinsi'),
-        
-        TextColumn::make('city')
-            ->label('Kota'),
-        
-        TextColumn::make('district')
-            ->label('Kelurahan'),
-        
-        TextColumn::make('address')
-            ->label('Alamat Lengkap')
-            ->limit(50),
-        
-        TextColumn::make('gmaps_link')
-            ->label('Link Google Maps')
-            ->url(fn ($record) => $record->gmaps_link, true),
+                    ->label('User')
+                    ->searchable(),
 
-        TextColumn::make('latitude')
-            ->label('Latitude'),
-        TextColumn::make('longitude')
-            ->label('Longitude'),
-        
-        
-        TextColumn::make('other_links')
-            ->label('Link Lainnya')
-            ->url(fn ($record) => $record->other_links, true),
-        
+                TextColumn::make('name')
+                    ->label('Nama Properti')
+                    ->searchable(),
+
+                TextColumn::make('description')
+                    ->label('Deskripsi Properti')
+                    ->limit(50),
+
+                TextColumn::make('price')
+                    ->label('Harga')
+                    ->money('IDR', true),
+
+                ImageColumn::make('image')
+                    ->label('Gambar'),
+
+                SelectColumn::make('offer_type')
+                    ->label('Tipe Penawaran')
+                    ->options([
+                        'jual' => 'Jual',
+                        'sewa' => 'Sewa',
+                    ]),
+
+                TextColumn::make('rental_start_date')
+                    ->label('Tanggal Mulai Sewa')
+                    ->dateTime(),
+
+                TextColumn::make('rental_end_date')
+                    ->label('Tanggal Selesai Sewa')
+                    ->dateTime(),
+
+                SelectColumn::make('property_type')
+                    ->label('Tipe Properti')
+                    ->options([
+                        'rumah' => 'Rumah',
+                        'apartement' => 'Apartement',
+                        'tanah' => 'Tanah',
+                    ]),
+
+                SelectColumn::make('furnished')
+                    ->label('Full Furnish')
+                    ->options([
+                        'ya' => 'Iya',
+                        'tidak' => 'Tidak',
+                        'semi' => 'Semi',
+                    ]),
+
+                TextColumn::make('jumlah_lantai')
+                    ->label('Jumlah Lantai')
+                    ->numeric(),
+                TextColumn::make('bedrooms')
+                    ->label('Kamar Tidur')
+                    ->numeric(),
+
+                TextColumn::make('bathrooms')
+                    ->label('Kamar Mandi')
+                    ->numeric(),
+
+                TextColumn::make('building_area')
+                    ->label('Luas Bangunan')
+                    ->numeric(),
+
+                TextColumn::make('land_area')
+                    ->label('Luas Tanah')
+                    ->numeric(),
+
+                TextColumn::make('garage')
+                    ->label('Garasi')
+                    ->numeric(),
+
+                TextColumn::make('province')
+                    ->label('Provinsi'),
+
+                TextColumn::make('city')
+                    ->label('Kota'),
+
+                TextColumn::make('district')
+                    ->label('Kelurahan'),
+
+                TextColumn::make('address')
+                    ->label('Alamat Lengkap')
+                    ->limit(50),
+
+                TextColumn::make('gmaps_link')
+                    ->label('Link Google Maps')
+                    ->url(fn ($record) => $record->gmaps_link, true),
+
+                TextColumn::make('latitude')
+                    ->label('Latitude'),
+                TextColumn::make('longitude')
+                    ->label('Longitude'),
+
+
+                TextColumn::make('other_links')
+                    ->label('Link Lainnya')
+                    ->url(fn ($record) => $record->other_links, true),
+
             ])
             ->filters([
                 //

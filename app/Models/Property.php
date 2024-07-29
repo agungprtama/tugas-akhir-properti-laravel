@@ -18,6 +18,7 @@ class Property extends Model
         'description',
         'price',
         'furnished',
+        'jumlah_lantai',
         'bedrooms',
         'bathrooms',
         'building_area',

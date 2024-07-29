@@ -17,7 +17,7 @@ class PropertyController extends Controller
     {
         // Mengambil kategori dari query string
         $offerType = $request->query('offer_type');
-        
+
         // Query untuk mendapatkan properti berdasarkan offer_type jika disediakan
         if ($offerType) {
             $properties = Property::where('offer_type', $offerType)->get();
@@ -27,20 +27,19 @@ class PropertyController extends Controller
 
         // return response()->json($properties);
         return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
-
     }
 
     // public function showUser(Request $request)
     // {
     //     $userId = $request->user_id;
-    
+
     // // Query untuk mendapatkan properti berdasarkan offer_type dan user_id jika disediakan
     //     $query = Property::with('user');
-        
+
     //     if ($userId) {
     //         $query->where('user_id', $userId);
     //     }
-        
+
     //     $properties = $query->get();
 
     //     return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
@@ -64,6 +63,7 @@ class PropertyController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             'furnished' => 'required|in:ya,tidak,semi',
+            'jumlah_lantai' => 'required|integer',
             'bedrooms' => 'required|integer',
             'bathrooms' => 'required|integer',
             'building_area' => 'required|integer',
@@ -95,7 +95,6 @@ class PropertyController extends Controller
 
         // return response()->json($property, 201);
         return ResponseFormatter::success($property, 'Berhasil mendapatkan data property');
-
     }
 
     public function show($id)
@@ -119,6 +118,7 @@ class PropertyController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric',
             'furnished' => 'required|in:ya,tidak,semi',
+            'jumlah_lantai' => 'required|integer',
             'bedrooms' => 'required|integer',
             'bathrooms' => 'required|integer',
             'building_area' => 'required|integer',
@@ -170,24 +170,24 @@ class PropertyController extends Controller
     {
         try {
             $property = Property::findOrFail($id);
-    
+
             // Pastikan user_id dari properti sesuai dengan id pengguna yang sedang terautentikasi
             if ($property->user_id !== Auth::id()) {
                 return response()->json(['error' => 'Forbidden'], 403);
             }
-    
+
             // Hapus gambar dari storage jika ada
             if ($property->image) {
                 Storage::disk('public')->delete($property->image);
             }
-    
+
             $property->delete();
             return response()->json(['message' => 'Berhasil menghapus data property'], 204);
         } catch (ModelNotFoundException $e) {
             return response()->json(['error' => 'Tidak ada data property yang ditemukan'], 404);
         }
     }
-    
+
 
     // public function userProperties(Request $request)
     // {

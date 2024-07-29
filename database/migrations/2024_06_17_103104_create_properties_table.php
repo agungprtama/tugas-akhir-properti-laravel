@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('description');
             $table->decimal('price', 15, 2);
             $table->enum('furnished', ['ya', 'tidak', 'semi']);
+            $table->integer('jumlah_lantai');
             $table->integer('bedrooms');
             $table->integer('bathrooms');
             $table->integer('building_area');
