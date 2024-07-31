@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\API\ArtikelController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ImagePropertyController;
 use App\Http\Controllers\API\KprSimulateController;
 use App\Http\Controllers\API\PropertyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 /*
@@ -38,8 +40,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('properties/{property}', [PropertyController::class, 'destroy']);
 
     Route::get('user/properties', [PropertyController::class, 'userProperties']);
-
-
 });
 Route::get('properties/{property}', [PropertyController::class, 'show']);
 
@@ -52,4 +52,4 @@ Route::get('/artikel/{id}', [ArtikelController::class, 'show']);
 Route::post('simulate', [KprSimulateController::class, 'simulate']);
 
 
-
+Route::post('/properties/images/upload', [ImagePropertyController::class, 'uploadImages']);

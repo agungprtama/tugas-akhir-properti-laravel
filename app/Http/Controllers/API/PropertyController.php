@@ -20,12 +20,12 @@ class PropertyController extends Controller
 
         // Query untuk mendapatkan properti berdasarkan offer_type jika disediakan
         if ($offerType) {
-            $properties = Property::where('offer_type', $offerType)->get();
+            $properties = Property::with('imageProperties')->where('offer_type', $offerType)->get();
         } else {
-            $properties = Property::all();
+            $properties = Property::with('imageProperties')->get();
         }
 
-        // return response()->json($properties);
+        // Mengembalikan response dengan format sukses
         return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
     }
 
@@ -48,7 +48,7 @@ class PropertyController extends Controller
     public function showUser(Request $request)
     {
         // Mengambil semua properti dengan relasi user
-        $properties = Property::with('user')->get();
+        $properties = Property::with(['user', 'imageProperties'])->get();
 
         return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
     }
@@ -100,10 +100,13 @@ class PropertyController extends Controller
     public function show($id)
     {
         try {
-            $property = Property::with('user')->findOrFail($id);
-            // return response()->json($property);
+            // Mengambil property berdasarkan ID dengan relasi user dan imageProperties
+            $property = Property::with(['user', 'imageProperties'])->findOrFail($id);
+
+            // Mengembalikan response dengan format sukses
             return ResponseFormatter::success($property, 'Berhasil mendapatkan data property');
         } catch (ModelNotFoundException $e) {
+            // Mengembalikan response error jika property tidak ditemukan
             return ResponseFormatter::error(null, "Tidak ada data property yang ditemukan", 404);
         }
     }
@@ -213,14 +216,29 @@ class PropertyController extends Controller
     //     return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
     // }
 
+    // public function userProperties()
+    // {
+    //     $user = Auth::user();
+    //     if (!$user) {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+
+    //     $properties = $user->properties;
+    //     return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
+    // }
+
     public function userProperties()
     {
+        // Mengambil user yang sedang login
         $user = Auth::user();
         if (!$user) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        $properties = $user->properties;
+        // Mengambil properti yang dimiliki user dengan relasi imageProperties
+        $properties = $user->properties->with('imageProperties')->get();
+
+        // Mengembalikan response dengan format sukses
         return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
     }
 }

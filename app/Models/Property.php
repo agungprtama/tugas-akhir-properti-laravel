@@ -40,4 +40,9 @@ class Property extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function imageProperties()
+    {
+        return $this->hasMany(ImageProperty::class);
+    }
 }
