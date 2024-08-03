@@ -5,11 +5,13 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CodeCheckController;
 use App\Http\Controllers\API\ForgotPasswordController;
 use App\Http\Controllers\API\ImagePropertyController;
+use App\Http\Controllers\API\InquiryController;
 use App\Http\Controllers\API\KprSimulateController;
 use App\Http\Controllers\API\PropertyController;
 use App\Http\Controllers\API\ResetPasswordController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -64,3 +66,4 @@ Route::post('/properties/images/upload', [ImagePropertyController::class, 'uploa
 Route::post('password/email',  [ForgotPasswordController::class, 'index']);
 Route::post('password/code/check', [CodeCheckController::class]);
 Route::post('password/reset', [ResetPasswordController::class, 'index']);
+Route::post('/inquiries', [InquiryController::class, 'store']);
