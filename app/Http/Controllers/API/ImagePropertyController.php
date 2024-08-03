@@ -16,21 +16,17 @@ class ImagePropertyController extends Controller
             'images.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        // Mengambil property_id dari request
         $propertyId = $validated['property_id'];
-
-        // Mengambil file images dari request
         $files = $request->file('images');
 
         $uploadedImages = [];
 
-        // Proses setiap file image
         foreach ($files as $file) {
-            // Generate nama unik untuk file
             $fileName = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
-
-            // Simpan file ke direktori yang diinginkan
             $filePath = $file->storeAs('images/properties', $fileName, 'public');
+
+            // Pastikan property_id diisi dengan benar
+            // dd($propertyId); // Cek apakah propertyId ada dan benar
 
             // Simpan informasi image ke database
             $imageProperty = ImageProperty::create([
@@ -38,11 +34,15 @@ class ImagePropertyController extends Controller
                 'image' => $filePath,
             ]);
 
-            // Simpan data yang diupload ke dalam array
-            $uploadedImages[] = $imageProperty;
+            $uploadedImages[] = [
+                'id' => $imageProperty->id,
+                'property_id' => $imageProperty->property_id,
+                'image' => $filePath,
+                'created_at' => $imageProperty->created_at,
+                'updated_at' => $imageProperty->updated_at,
+            ];
         }
 
-        // Mengembalikan response sukses dengan data image yang diupload
         return response()->json([
             'success' => true,
             'message' => 'Images uploaded successfully',

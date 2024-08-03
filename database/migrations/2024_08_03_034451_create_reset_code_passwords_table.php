@@ -11,10 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('image_properties', function (Blueprint $table) {
+        Schema::create('reset_code_passwords', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('property_id')->constrained()->onDelete('cascade')->default(1);
-            $table->string('image');
             $table->timestamps();
         });
     }
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('image_properties');
+        Schema::dropIfExists('reset_code_passwords');
     }
 };
