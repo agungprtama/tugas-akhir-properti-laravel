@@ -233,7 +233,7 @@ class PropertyResource extends Resource
 
                 TextColumn::make('gmaps_link')
                     ->label('Link Google Maps')
-                    ->url(fn ($record) => $record->gmaps_link, true),
+                    ->url(fn($record) => $record->gmaps_link, true),
 
                 TextColumn::make('latitude')
                     ->label('Latitude'),
@@ -243,7 +243,7 @@ class PropertyResource extends Resource
 
                 TextColumn::make('other_links')
                     ->label('Link Lainnya')
-                    ->url(fn ($record) => $record->other_links, true),
+                    ->url(fn($record) => $record->other_links, true),
 
             ])
             ->filters([

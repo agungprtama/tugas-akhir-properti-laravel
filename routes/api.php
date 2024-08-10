@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('user/properties', [PropertyController::class, 'userProperties']);
 });
+
 Route::get('properties/{property}', [PropertyController::class, 'show']);
 
 Route::get('properties', [PropertyController::class, 'index']);
@@ -58,7 +59,6 @@ Route::get('artikel', [ArtikelController::class, 'index']);
 Route::get('/artikel/{id}', [ArtikelController::class, 'show']);
 
 Route::post('simulate', [KprSimulateController::class, 'simulate']);
-
 
 Route::post('/properties/images/upload', [ImagePropertyController::class, 'uploadImages']);
 

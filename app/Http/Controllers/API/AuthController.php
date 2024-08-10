@@ -49,7 +49,7 @@ class AuthController extends Controller
 
             $tokenResult = $user->createToken('authToken')->plainTextToken;
             return ResponseFormatter::success([
-                'access_token' => $tokenResult,
+                'access_token' => $tokenResult, // AUTHORIZATION JSON WEB TOKEN MENGGUNAKAN BEARER TOKEN
                 'token_type' => 'Bearer',
                 'user' => $user
             ], 'Authenticated');
