@@ -227,18 +227,44 @@ class PropertyController extends Controller
     //     return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
     // }
 
+    // public function userProperties()
+    // {
+    //     // Mengambil user yang sedang login
+    //     $user = Auth::user();
+    //     if (!$user) {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+
+    //     // Mengambil properti yang dimiliki user dengan relasi imageProperties
+    //     $properties = $user->properties->with('imageProperties')->get();
+
+    //     // Mengembalikan response dengan format sukses
+    //     return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
+    // }
+
+    // public function userProperties()
+    // {
+    //     $user = Auth::user();
+    //     if (!$user) {
+    //         return response()->json(['error' => 'Unauthorized'], 401);
+    //     }
+
+    //     $properties = $user->properties;
+    //     return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
+    // }
+
     public function userProperties()
     {
-        // Mengambil user yang sedang login
         $user = Auth::user();
         if (!$user) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        // Mengambil properti yang dimiliki user dengan relasi imageProperties
-        $properties = $user->properties->with('imageProperties')->get();
+        // Mengambil properti berdasarkan user_id dan memuat relasi imageProperties
+        $properties = Property::where('user_id', $user->id)
+            ->with('imageProperties', 'user')
+            ->get();
 
-        // Mengembalikan response dengan format sukses
         return ResponseFormatter::success($properties, 'Berhasil mendapatkan data property');
     }
 }
