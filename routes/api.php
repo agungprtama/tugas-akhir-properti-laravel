@@ -66,4 +66,4 @@ Route::post('/properties/images/upload', [ImagePropertyController::class, 'uploa
 Route::post('password/email',  [ForgotPasswordController::class, 'index']);
 Route::post('password/code/check', [CodeCheckController::class]);
 Route::post('password/reset', [ResetPasswordController::class, 'index']);
-Route::post('/inquiries', [InquiryController::class, 'store']);
+Route::post('inquiries', [InquiryController::class, 'store']);

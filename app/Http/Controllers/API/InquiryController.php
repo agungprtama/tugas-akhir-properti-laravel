@@ -11,16 +11,21 @@ use Illuminate\Support\Facades\Mail;
 
 class InquiryController extends Controller
 {
-    public function store(StoreInquiryRequest $request)
+    public function store(Request $request)
     {
-        // Ambil data dari request
-        $data = $request->validated();
 
         // Simpan data ke database (asumsikan sudah ada model Inquiry)
-        $inquiry = Inquiry::create($data);
+        $inquiry = Inquiry::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'message' => $request->message,
+        ]);
+        // dd($inquiry);
+
 
         // Kirim notifikasi email ke admin
-        Mail::to('admin@example.com')->send(new InquiryNotification($inquiry));
+        Mail::to('reonaldi1105@gmail.com')->send(new InquiryNotification($inquiry));
 
         return response()->json(['message' => 'Inquiry sent successfully'], 200);
     }
