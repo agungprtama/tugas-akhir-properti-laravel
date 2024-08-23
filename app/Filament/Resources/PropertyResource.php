@@ -124,6 +124,9 @@ class PropertyResource extends Resource
                 TextInput::make('city')
                     ->label('Kota')
                     ->required(),
+                TextInput::make('kecamatan')
+                    ->label('Kecamatan')
+                    ->required(),
                 TextInput::make('district')
                     ->label('Kelurahan')
                     ->required(),
@@ -223,7 +226,8 @@ class PropertyResource extends Resource
 
                 TextColumn::make('city')
                     ->label('Kota'),
-
+                TextColumn::make('kecamatan')
+                    ->label('Kecamatan'),
                 TextColumn::make('district')
                     ->label('Kelurahan'),
 

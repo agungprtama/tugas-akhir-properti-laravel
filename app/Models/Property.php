@@ -34,6 +34,7 @@ class Property extends Model
         'user_id',
         'latitude',
         'longitude',
+        'kecamatan',
     ];
 
     public function user()

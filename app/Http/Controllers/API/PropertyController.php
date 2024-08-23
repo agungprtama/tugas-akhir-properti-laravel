@@ -76,7 +76,8 @@ class PropertyController extends Controller
             'gmaps_link' => 'nullable|url',
             'other_links' => 'nullable|url',
             'latitude' => 'required|string',
-            'longitude' => 'required|string'
+            'longitude' => 'required|string',
+            'kecamatan' => 'required|string',
         ]);
 
         // Mengunggah gambar jika ada
@@ -134,7 +135,8 @@ class PropertyController extends Controller
             'gmaps_link' => 'nullable|url',
             'other_links' => 'nullable|url',
             'latitude' => 'required|string',
-            'longitude' => 'required|string'
+            'longitude' => 'required|string',
+            'kecamatan' => 'required|string'
         ]);
 
         $property = Property::findOrFail($id);
